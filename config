@@ -156,6 +156,7 @@ assign [class="thunderbird"] $ws4
 assign [class="gazebo"] $ws5
 assign [class="rviz2"] $ws5
 assign [class="SwRI Console"] $ws6
+assign [class="Foxglove Studio"] $ws7
 
 # reload the configuration file
 bindsym $mod+Shift+c reload
@@ -237,18 +238,19 @@ bindsym $mod+Ctrl+less move workspace to output left
 
 # set wallpaper
 # u need to have feh installed (sudo apt-get install feh)
-exec_always feh --bg-scale /home/logi/Pictures/wallpapers/mike-yukhtenko-a2kD4b0KK4s-unsplash\ \(1\).jpg
+# exec_always feh --bg-scale /home/logi/Pictures/wallpapers/mike-yukhtenko-a2kD4b0KK4s-unsplash\ \(1\).jpg
 
 # u need to have arandr and xrandr installed
-exec_always xrandr --output eDP-1 --mode 1920x1080 --pos 0x0 --rotate normal --output HDMI-1 --primary --mode 1920x1080 --pos 1920x0 --rotate normal --output DP-1 --off --output HDMI-2 --off --output DP-1-0 --off --output DP-1-1 --off --output DP-1-2 --off --output DP-1-3 --off
+exec_always xrandr --output eDP-1 --primary --mode 1920x1080 --pos 1080x420 --rotate normal --output HDMI-1 --mode 1920x1080 --pos 0x0 --rotate left --output DP-1 --off --output HDMI-2 --off --output DP-1-0 --off --output DP-1-1 --off --output DP-1-2 --off --output DP-1-3 --off
 
-# exec_always xrandr --output eDP-1 --mode 1920x1080 --pos 0x0 --rotate normal --output HDMI-1 --primary --mode 1920x1080 --pos 1920x0 --rotate normal --output HDMI-2 --mode 1920x1080 --pos 3840x0 --rotate normal --output DP-1 --off --output DP-1-0 --off --output DP-1-1 --off --output DP-1-2 --off --output DP-1-3 --off
+# exec_always xrandr --output eDP-1 --mode 1920x1080 --pos 0x0 --rotate normal --output HDMI-1 --primary --mode 1920x1080 --pos 1920x0 --rotate normal --output HDMI-2 --mode 1920x1080 --pos 3840x0 --rotate normal --output DP-1 --off --output DP-1-0 --off --output DP-1-1 --off --output DP-1-2 --off --output DP-1-3 --off --rate 75
 
 
 # screeshots
 # bindsym $mod+b exec --no-startup-id maim --select "/home/$USER/Pictures/$(date)"
 # bindsym $mod+b exec maim -s -u | xclip -selection clipboard -t image/png -i
-bindsym $mod+b exec --no-startup-id sh -c 'maim -s -u ~/Pictures/Screenshots/screenshot-$(date +%Y-%m-%d_%H-%M-%S).png | xclip -selection clipboard -t image/png -i'
+bindsym $mod+b exec --no-startup-id sh -c 'maim -s -u | tee ~/Pictures/Screenshots/screenshot-$(date +%Y-%m-%d_%H-%M-%S).png | xclip -selection clipboard -t image/png'
+
 
 # change keyboard layouts
 exec setxkbmap -layout us,ua -option grp:win_space_toggle
