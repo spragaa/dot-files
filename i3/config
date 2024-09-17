@@ -9,6 +9,18 @@
 #
 # Please see https://i3wm.org/docs/userguide.html for a complete reference!
 
+# Gruvbox color scheme
+set $bg #282828
+set $red #cc241d
+set $green #98971a
+set $yellow #d79921
+set $blue #458588
+set $purple #b16286
+set $aqua #689d6a
+set $gray #a89984
+set $darkgray #1d2021
+set $white #ebdbb2
+
 set $mod Mod1
 
 # Font for window titles. Will also be used by the bar unless a different font
@@ -45,7 +57,7 @@ bindsym XF86AudioMicMute exec --no-startup-id pactl set-source-mute @DEFAULT_SOU
 floating_modifier $mod
 
 # start a terminal
-bindsym $mod+Return exec i3-sensible-terminal
+bindsym $mod+Return exec kitty
 
 # kill focused window
 bindsym $mod+q kill
@@ -150,6 +162,7 @@ bindsym $mod+Shift+0 move container to workspace $ws10
 bindsym $mod+Shift+n move container to workspace $wsn
 
 assign [class="Google-chrome"] $ws1
+assign [class="firefox"] $ws1
 assign [class="Code"] $ws3
 assign [class="discord"] $ws8
 assign [class="Spotify"] $ws9
@@ -173,10 +186,10 @@ bindsym $mod+Shift+e exec "i3-nagbar -t warning -m 'You pressed the exit shortcu
 mode "resize" {
         # These bindings trigger as soon as you enter the resize mode
 
-        # Pressing left will shrink the window’s width.
-        # Pressing right will grow the window’s width.
-        # Pressing up will shrink the window’s height.
-        # Pressing down will grow the window’s height.
+        # Pressing left will shrink the window's width.
+        # Pressing right will grow the window's width.
+        # Pressing up will shrink the window's height.
+        # Pressing down will grow the window's height.
         bindsym j resize shrink width 10 px or 10 ppt
         bindsym k resize grow height 10 px or 10 ppt
         bindsym l resize shrink height 10 px or 10 ppt
@@ -196,18 +209,12 @@ mode "resize" {
 
 bindsym $mod+r mode "resize"
 
-set $bg-color 	         #2f343f
-set $inactive-bg-color   #2f343f
-set $text-color          #f3f4f5
-set $inactive-text-color #676E7D
-set $urgent-bg-color     #E53935
-
 # window colors
-#                       border              background         text                 indicator
-client.focused          $bg-color           $bg-color          $text-color          #00ff00
-client.unfocused        $inactive-bg-color $inactive-bg-color $inactive-text-color #00ff00
-client.focused_inactive $inactive-bg-color $inactive-bg-color $inactive-text-color #00ff00
-client.urgent           $urgent-bg-color    $urgent-bg-color   $text-color 
+# class                 border|backgr|text|indicator|child_border
+client.focused          $green $green $darkgray $purple $green
+client.focused_inactive $darkgray $darkgray $yellow $purple $darkgray
+client.unfocused        $darkgray $darkgray $yellow $purple $darkgray
+client.urgent           $red $red $white $red $red
 
 hide_edge_borders both
 
@@ -216,17 +223,20 @@ hide_edge_borders both
 bar {
         status_command i3status
         colors {
-		background $bg-color
-	    	separator #757575
-		#                  border             background         text
-		focused_workspace  $bg-color          $bg-color          $text-color
-		inactive_workspace $inactive-bg-color $inactive-bg-color $inactive-text-color
-		urgent_workspace   $urgent-bg-color   $urgent-bg-color   $text-color
-	}
+            background $bg
+            statusline $white
+            separator  $yellow
+
+            # class             border  backgr. text
+            focused_workspace   $aqua   $aqua   $darkgray
+            inactive_workspace  $darkgray $darkgray $yellow
+            active_workspace    $darkgray $darkgray $yellow
+            urgent_workspace    $red    $red    $bg
+        }
 }
 
 # custom keybindings
-bindsym $mod+shift+x exec i3lock --color "$bg-color"
+bindsym $mod+shift+x exec i3lock --color "$bg"
 
 # volume manipulations
 bindsym $mod+o exec --no-startup-id pactl set-sink-volume @DEFAULT_SINK@ -3%
@@ -242,19 +252,17 @@ bindsym $mod+Ctrl+less move workspace to output left
 
 # set wallpaper
 # u need to have feh installed (sudo apt-get install feh)
-# exec_always feh --bg-scale /home/logi/Pictures/wallpapers/mike-yukhtenko-a2kD4b0KK4s-unsplash\ \(1\).jpg
+# exec_always feh --bg-scale /home/logi/Pictures/wallpapers/mike-yukhtenko-a2kD4b0KK4s-unsplash\ $1$.jpg
 
 # u need to have arandr and xrandr installed
 exec_always xrandr --output eDP-1 --primary --mode 1920x1080 --pos 1080x420 --rotate normal --output HDMI-1 --mode 1920x1080 --pos 0x0 --rotate left --output DP-1 --off --output HDMI-2 --off --output DP-1-0 --off --output DP-1-1 --off --output DP-1-2 --off --output DP-1-3 --off
 
 # exec_always xrandr --output eDP-1 --mode 1920x1080 --pos 0x0 --rotate normal --output HDMI-1 --primary --mode 1920x1080 --pos 1920x0 --rotate normal --output HDMI-2 --mode 1920x1080 --pos 3840x0 --rotate normal --output DP-1 --off --output DP-1-0 --off --output DP-1-1 --off --output DP-1-2 --off --output DP-1-3 --off --rate 75
 
-
-# screeshots
+# screenshots
 # bindsym $mod+b exec --no-startup-id maim --select "/home/$USER/Pictures/$(date)"
 # bindsym $mod+b exec maim -s -u | xclip -selection clipboard -t image/png -i
 bindsym $mod+b exec --no-startup-id sh -c 'maim -s -u | tee ~/Pictures/Screenshots/screenshot-$(date +%Y-%m-%d_%H-%M-%S).png | xclip -selection clipboard -t image/png'
-
 
 # change keyboard layouts
 exec setxkbmap -layout us,ua -option grp:win_space_toggle
@@ -262,3 +270,5 @@ exec setxkbmap -layout us,ua -option grp:win_space_toggle
 exec xinput set-prop "ELAN1203:00 04F3:307A Touchpad"  "libinput Tapping Enabled" 1
 
 exec compton
+
+exec --no-startup-id /home/logi/myself/cfg/disable_dpms.sh
