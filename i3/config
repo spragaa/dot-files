@@ -130,8 +130,8 @@ set $ws4 "email"
 set $ws5 "5"
 set $ws6 "6"
 set $ws7 "7"
-set $ws8 "discord"
-set $ws9 "spotify"
+set $ws8 "9"
+set $ws9 "other"
 set $ws10 "messenger"
 set $wsn "obsidian"
 
@@ -164,7 +164,8 @@ bindsym $mod+Shift+n move container to workspace $wsn
 assign [class="Google-chrome"] $ws1
 assign [class="firefox"] $ws1
 assign [class="Code"] $ws3
-assign [class="discord"] $ws8
+assign [class="Zed"] $ws3
+assign [class="discord"] $ws9
 assign [class="Spotify"] $ws9
 assign [class="obsidian"] $wsn
 assign [class="TelegramDesktop"] $ws10
@@ -216,15 +217,18 @@ client.focused_inactive $darkgray $darkgray $yellow $purple $darkgray
 client.unfocused        $darkgray $darkgray $yellow $purple $darkgray
 client.urgent           $red $red $white $red $red
 
+new_window none # hide windows top bar
+new_float none
+
 hide_edge_borders both
 
 # Start i3bar to display a workspace bar (plus the system information i3status
 # finds out, if available)
 bar {
-        status_command i3status
+        status_command ~/.config/i3/bar.sh
         colors {
             background $bg
-            statusline $white
+            statusline $yellow
             separator  $yellow
 
             # class             border  backgr. text
@@ -252,7 +256,7 @@ bindsym $mod+Ctrl+less move workspace to output left
 
 # set wallpaper
 # u need to have feh installed (sudo apt-get install feh)
-# exec_always feh --bg-scale /home/logi/Pictures/wallpapers/mike-yukhtenko-a2kD4b0KK4s-unsplash\ $1$.jpg
+exec_always feh --bg-scale /home/logi/Pictures/wallpapers/black.jpg
 
 # u need to have arandr and xrandr installed
 exec_always xrandr --output eDP-1 --primary --mode 1920x1080 --pos 1080x420 --rotate normal --output HDMI-1 --mode 1920x1080 --pos 0x0 --rotate left --output DP-1 --off --output HDMI-2 --off --output DP-1-0 --off --output DP-1-1 --off --output DP-1-2 --off --output DP-1-3 --off
